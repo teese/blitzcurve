@@ -4,7 +4,7 @@ def exp_func(x, a, b, c):
     y = a * np.exp(-b * x) + c
     return y
 
-class FlourescentColours:
+class FlourescentColours():
     def __init__(self):
         self.red = "#FF355E"
         self.watermelon = "#FD5B78"
