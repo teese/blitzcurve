@@ -15,7 +15,7 @@ import blitzcurve.utils as utils
 # schweris_dir = r"D:\drive\schweris"
 # data_dir = os.path.join(schweris_dir, "Projects\\smFRET_fit\\20171017_data")
 # max_figs = 20
-from blitzcurve.utils import setup_matplotlib_dark_background, OutFilepaths
+from blitzcurve.utils import setup_matplotlib_dark_background, FitFilePaths
 
 
 def run_fit(data_dir, figs_to_plot="all", testing_mode=False):
@@ -33,7 +33,7 @@ def run_fit(data_dir, figs_to_plot="all", testing_mode=False):
         print(csv)
         df = pd.read_csv(csv)
         # paths for the output files
-        p = OutFilepaths(data_dir, csv)
+        p = FitFilePaths(data_dir, csv)
         summ_dict, fd = fit_single_sample(df, fc, p, figs_to_plot)
         nested_summ_dict[p.filename] = summ_dict
 
@@ -49,8 +49,10 @@ def run_fit(data_dir, figs_to_plot="all", testing_mode=False):
 
 
 class OutputFitData:
-    def __init__(self, fit_savgol=None, seg1_xfit=None, seg1_yfit=None, seg2_xfit=None, seg2_yfit=None):
-        self.fit_savgol = fit_savgol
+    def __init__(self, name=None, time=None, y_fit_savgol=None, seg1_xfit=None, seg1_yfit=None, seg2_xfit=None, seg2_yfit=None):
+        self.name = name
+        self.y_fit_savgol = y_fit_savgol
+        self.time = time
         self.seg1_xfit = seg1_xfit
         self.seg1_yfit = seg1_yfit
         self.seg2_xfit = seg2_xfit
@@ -60,6 +62,10 @@ def fit_single_sample(df, fc, p, figs_to_plot):
     summ_dict = {}
     # initialise fit-data-object (holds arrays with fitted curves, etc)
     fd = OutputFitData()
+
+    fd.filename = p.filename
+    fd.time = df.time_ns
+    print("fd.filename", fd.filename)
 
     if "all" or "rotat" in figs_to_plot:
         plt.close("all")

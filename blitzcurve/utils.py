@@ -3,7 +3,8 @@ import os
 import numpy as np
 
 def exp_func(x, a, b, c):
-    y = a * np.exp(-b * x) + c
+    #y = a * np.exp(-b * x) + c
+    y = (a - c) * np.exp(-b * x) + c
     return y
 
 class FlourescentColours():
@@ -42,18 +43,54 @@ def setup_matplotlib_dark_background(plt):
     plt.rcParams["savefig.dpi"] = 240
 
 
-class OutFilepaths:
-    def __init__(self, data_dir, csv):
+# class OutFilepaths:
+#     def __init__(self, data_dir, csv):
+#         self.fits_dir = os.path.join(data_dir, "fits")
+#         self.rotat_dir = os.path.join(self.fits_dir, "rotat")
+#         self.savgol_dir = os.path.join(self.fits_dir, "savgol")
+#         self.seg1_dir = os.path.join(self.fits_dir, "seg1")
+#         self.seg2_dir = os.path.join(self.fits_dir, "seg2")
+#         self.fitdata_dir = os.path.join(self.fits_dir, "fitdata")
+#
+#         for path in [self.fits_dir, self.rotat_dir, self.savgol_dir, self.seg1_dir, self.seg2_dir, self.fitdata_dir]:
+#             if not os.path.isdir(path):
+#                 os.makedirs(path)
+#         self.filename = os.path.basename(csv)
+#         self.rotat_fit_png = os.path.join(self.rotat_dir, self.filename[:-4] + "_rotat_fit.png")
+#         self.savgol_fit_png = os.path.join(self.savgol_dir, self.filename[:-4] + "_savgol_fit.png")
+#         self.savgol_fit_peak_png = os.path.join(self.savgol_dir, self.filename[:-4] + "_savgol_fit_peak.png")
+#         self.savgol_fit_desc_png = os.path.join(self.seg1_dir, self.filename[:-4] + "_savgol_fit_desc.png")
+#         self.exp_fit_seg1_png = os.path.join(self.seg1_dir, self.filename[:-4] + "_seg1.png")
+#         self.exp_fit_seg2_png = os.path.join(self.seg2_dir, self.filename[:-4] + "_seg2.png")
+#
+#         self.fitdata_pickle = os.path.join(self.fitdata_dir, self.filename[:-4] + "_fitdata.pickle")
+
+
+class OutDirPaths:
+    """
+    Creates paths for subdirectories and makes sure that they exist
+    """
+    def __init__(self, data_dir):
         self.fits_dir = os.path.join(data_dir, "fits")
         self.rotat_dir = os.path.join(self.fits_dir, "rotat")
         self.savgol_dir = os.path.join(self.fits_dir, "savgol")
         self.seg1_dir = os.path.join(self.fits_dir, "seg1")
         self.seg2_dir = os.path.join(self.fits_dir, "seg2")
         self.fitdata_dir = os.path.join(self.fits_dir, "fitdata")
+        self.summary_figs_dir = os.path.join(data_dir, "summary", "figs")
 
-        for path in [self.fits_dir, self.rotat_dir, self.savgol_dir, self.seg1_dir, self.seg2_dir, self.fitdata_dir]:
+        for path in [self.fits_dir, self.rotat_dir, self.savgol_dir, self.seg1_dir, self.seg2_dir, self.fitdata_dir, self.summary_figs_dir]:
             if not os.path.isdir(path):
                 os.makedirs(path)
+
+class FitFilePaths(OutDirPaths):
+    """
+    Adds file paths to the OutDirPaths object that are specific to a single sample, based on the original sample filename.
+    """
+    def __init__(self, data_dir, csv):
+        # instantiate the parent OutDirPaths object, giving the relevant directories
+        OutDirPaths.__init__(self, data_dir)
+        # create various paths
         self.filename = os.path.basename(csv)
         self.rotat_fit_png = os.path.join(self.rotat_dir, self.filename[:-4] + "_rotat_fit.png")
         self.savgol_fit_png = os.path.join(self.savgol_dir, self.filename[:-4] + "_savgol_fit.png")
@@ -61,5 +98,23 @@ class OutFilepaths:
         self.savgol_fit_desc_png = os.path.join(self.seg1_dir, self.filename[:-4] + "_savgol_fit_desc.png")
         self.exp_fit_seg1_png = os.path.join(self.seg1_dir, self.filename[:-4] + "_seg1.png")
         self.exp_fit_seg2_png = os.path.join(self.seg2_dir, self.filename[:-4] + "_seg2.png")
-
         self.fitdata_pickle = os.path.join(self.fitdata_dir, self.filename[:-4] + "_fitdata.pickle")
+
+class CompareFilePaths(OutDirPaths):
+    """
+    Adds file paths to the OutDirPaths object that are specific to the compare function, e.g. for barcharts.
+    """
+    def __init__(self, data_dir):
+        # instantiate the parent OutDirPaths object, giving the relevant directories
+        OutDirPaths.__init__(self, data_dir)
+        # barchart paths
+        self.barchart_r_max = os.path.join(self.summary_figs_dir, "01_barchart_r_max.png")
+        self.barchart_r_inf = os.path.join(self.summary_figs_dir, "02_barchart_r_inf.png")
+        self.barchart_variable_a_png = os.path.join(self.summary_figs_dir, "03_barchart_a.png")
+        self.barchart_variable_b_png = os.path.join(self.summary_figs_dir, "04_barchart_b.png")
+        self.barchart_variable_c_png = os.path.join(self.summary_figs_dir, "05_barchart_c.png")
+        # linechart paths
+        self.linechart_savgol = os.path.join(self.summary_figs_dir, "06_linechart_savgol.png")
+        self.linechart_seg1 = os.path.join(self.summary_figs_dir, "07_linechart_seg1.png")
+        self.linechart_seg2 = os.path.join(self.summary_figs_dir, "08_linechart_seg2.png")
+
