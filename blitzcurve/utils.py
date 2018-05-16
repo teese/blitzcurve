@@ -1,3 +1,5 @@
+import os
+
 import numpy as np
 
 def exp_func(x, a, b, c):
@@ -31,3 +33,33 @@ def get_fluorescent_colours():
     fl_col_keys = sorted(fc_dict)
     fl_col_list = [fc_dict[k] for k in fl_col_keys]
     return fc_dict, fl_col_keys, fl_col_list
+
+
+def setup_matplotlib_dark_background(plt):
+    plt.style.use('dark_background')
+    plt.rcParams['errorbar.capsize'] = 3
+    plt.rcParams['figure.figsize'] = (5, 5)
+    plt.rcParams["savefig.dpi"] = 240
+
+
+class OutFilepaths:
+    def __init__(self, data_dir, csv):
+        self.fits_dir = os.path.join(data_dir, "fits")
+        self.rotat_dir = os.path.join(self.fits_dir, "rotat")
+        self.savgol_dir = os.path.join(self.fits_dir, "savgol")
+        self.seg1_dir = os.path.join(self.fits_dir, "seg1")
+        self.seg2_dir = os.path.join(self.fits_dir, "seg2")
+        self.fitdata_dir = os.path.join(self.fits_dir, "fitdata")
+
+        for path in [self.fits_dir, self.rotat_dir, self.savgol_dir, self.seg1_dir, self.seg2_dir, self.fitdata_dir]:
+            if not os.path.isdir(path):
+                os.makedirs(path)
+        self.filename = os.path.basename(csv)
+        self.rotat_fit_png = os.path.join(self.rotat_dir, self.filename[:-4] + "_rotat_fit.png")
+        self.savgol_fit_png = os.path.join(self.savgol_dir, self.filename[:-4] + "_savgol_fit.png")
+        self.savgol_fit_peak_png = os.path.join(self.savgol_dir, self.filename[:-4] + "_savgol_fit_peak.png")
+        self.savgol_fit_desc_png = os.path.join(self.seg1_dir, self.filename[:-4] + "_savgol_fit_desc.png")
+        self.exp_fit_seg1_png = os.path.join(self.seg1_dir, self.filename[:-4] + "_seg1.png")
+        self.exp_fit_seg2_png = os.path.join(self.seg2_dir, self.filename[:-4] + "_seg2.png")
+
+        self.fitdata_pickle = os.path.join(self.fitdata_dir, self.filename[:-4] + "_fitdata.pickle")
