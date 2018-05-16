@@ -38,7 +38,7 @@ def run_compare(data_dir, file_list="all", name_dict= None, testing_mode=False):
         # rename the index
         df.rename(index=name_dict, inplace=True)
 
-    create_barcharts = False
+    create_barcharts = True
 
     if create_barcharts:
         #########################################################################
@@ -152,12 +152,11 @@ def run_compare(data_dir, file_list="all", name_dict= None, testing_mode=False):
             label = name_dict[fd.filename] if fd.filename in name_dict else fd.filename
             ax_sg.plot(fd.time, fd.y_fit_savgol, label=label)
 
-            ax_seg1.plot(fd.time, fd.y_fit_savgol, color="0.3", label=label, zorder=0)
+            ax_seg1.plot(fd.time, fd.y_fit_savgol, color="0.3", zorder=0)
             ax_seg1.plot(fd.seg1_xfit, fd.seg1_yfit, label=label)
 
-            ax_seg2.plot(fd.time, fd.y_fit_savgol, color="0.3", label=label, zorder=0)
+            ax_seg2.plot(fd.time, fd.y_fit_savgol, color="0.3", zorder=0)
             ax_seg2.plot(fd.seg2_xfit, fd.seg2_yfit, label=label)
-
 
     ax_sg.set_xlabel("time (ns)")
     ax_sg.set_ylabel("anisotropy (r)")
