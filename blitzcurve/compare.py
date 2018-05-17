@@ -9,8 +9,33 @@ import blitzcurve.utils as utils
 import sys
 import blitzcurve
 
+def run_compare(data_dir, file_list="all", name_dict= None):
+    """
 
-def run_compare(data_dir, file_list="all", name_dict= None, testing_mode=False):
+    Parameters
+    ----------
+    data_dir : str
+        Path to directory with the input text files.
+    file_list : str, list
+        List of files to analyse.
+        E.g. ["10nM-FGC1-2min_aniso.txt", "10nM-FGC2-2min_aniso.txt"]
+        Default is "all", which analyses all files in folder
+    name_dict : dict
+        Dictionary to rename long filenames for plotting.
+
+    Returns
+    -------
+
+    Usage
+    -----
+    import blitzcurve
+    data_dir = r"D:\data\20180229_TRdata"
+    # fit
+    blitzcurve.run_fit(data_dir, figs_to_plot=figs_to_plot, testing_mode=False)
+    # compare
+    name_dict = {"10nM-FGC1-2min_aniso.txt": "FGC1", "10nM-FGC2-2min_aniso.txt": "FGC2", "10nM-FGC3-2min_aniso.txt": "FGC3"}
+    blitzcurve.run_compare(data_dir, name_dict=name_dict)
+    """
 
     # create object with the compare file paths
     cfp = utils.CompareFilePaths(data_dir)
@@ -26,9 +51,6 @@ def run_compare(data_dir, file_list="all", name_dict= None, testing_mode=False):
             if os.path.basename(csv) not in file_list:
                 csv_files.remove(csv)
 
-    if testing_mode:
-        csv_files = csv_files[0:2]
-
     summ_csv = os.path.join(data_dir, "summary", "fit_summary.csv")
     df = pd.read_csv(summ_csv, index_col=0)
 
@@ -37,6 +59,10 @@ def run_compare(data_dir, file_list="all", name_dict= None, testing_mode=False):
     if name_dict is not None:
         # rename the index
         df.rename(index=name_dict, inplace=True)
+    else:
+        # no naming dict available
+        # cut off the ".txt" in the filename before plotting.
+        df.index = df.index.str[:-4]
 
     create_barcharts = True
 
@@ -148,8 +174,10 @@ def run_compare(data_dir, file_list="all", name_dict= None, testing_mode=False):
             print("fd.filename", fd.filename)
             #for item in [fd.fit_savgol, fd.seg1_xfit, fd.seg1_yfit, fd.seg2_xfit, fd.seg2_yfit]:
             #    assert item is not None
-
-            label = name_dict[fd.filename] if fd.filename in name_dict else fd.filename
+            if name_dict is not None:
+                label = name_dict[fd.filename] if fd.filename in name_dict else fd.filename
+            else:
+                label = fd.filename
             ax_sg.plot(fd.time, fd.y_fit_savgol, label=label)
 
             ax_seg1.plot(fd.time, fd.y_fit_savgol, color="0.3", zorder=0)

@@ -8,6 +8,9 @@ def exp_func(x, a, b, c):
     return y
 
 class FlourescentColours():
+    """
+    Object with fluorescent html colours from https://www.w3schools.com/colors/colors_crayola.asp
+    """
     def __init__(self):
         self.red = "#FF355E"
         self.watermelon = "#FD5B78"
@@ -25,9 +28,16 @@ class FlourescentColours():
         self.rose = "#EE34D2"
         self.magenta = "#FF00CC"
         self.pizzazz = "FF00CC"
-
+        self.colourlist = ['#50BFE6', '#FF9933', '#66FF66', '#FFFF66', '#CCFF00', '#FF00CC', '#AAF01', '#FF6037', '#FF6EFF', 'FF00CC', '#FF355E', '#EE34D2', '#FFCC33', '#FF9966', '#FD5B78', '#FFFF66']
 
 def get_fluorescent_colours():
+    """
+    DEPRECATED. Use the FlourescentColours object instead.
+
+    Usage
+    -----
+    fc_dict, fl_col_keys, fl_col_list = blitzcurve.utils.get_fluorescent_colours()
+    """
     # get dict and list of fluorescent colours
     #https://www.w3schools.com/colors/colors_crayola.asp
     fc_dict = {"Red":"#FF355E","Watermelon":"#FD5B78","Orange":"#FF6037","Tangerine":"#FF9966","Carrot":"#FF9933","Sunglow":"#FFCC33","Lemon":"#FFFF66","Yellow":"#FFFF66","Lime":"#CCFF00","Green":"#66FF66","Mint":"#AAF01","Blue":"#50BFE6","Pink":"#FF6EFF","Rose":"#EE34D2","Magenta":"#FF00CC","Pizzazz":"FF00CC"}
@@ -35,13 +45,18 @@ def get_fluorescent_colours():
     fl_col_list = [fc_dict[k] for k in fl_col_keys]
     return fc_dict, fl_col_keys, fl_col_list
 
-
 def setup_matplotlib_dark_background(plt):
+    """ Initialises the dark background style of matplotlib, which applies to all following plots.
+    Adds error caps to barcharts, sets figure size and dpi.
+
+    Parameters
+    ----------
+    plt : matplotlib library
+    """
     plt.style.use('dark_background')
     plt.rcParams['errorbar.capsize'] = 3
     plt.rcParams['figure.figsize'] = (5, 5)
     plt.rcParams["savefig.dpi"] = 240
-
 
 # class OutFilepaths:
 #     def __init__(self, data_dir, csv):
