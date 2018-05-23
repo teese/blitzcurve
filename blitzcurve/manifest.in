@@ -1,0 +1,4 @@
+recurse-include examples *.txt
+include manifest.in
+include license.txt
+include readme.rst
