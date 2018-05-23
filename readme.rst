@@ -54,6 +54,22 @@ Installation
 
 __ AnacondaLink_
 
+Usage
+~~~~~
+.. highlight:: python
+
+    import blitzcurve
+    # define data directory with csv files
+    data_dir = r"D:\data\20180229_TRdata"
+    # OPTIONAL: define which data files will be analysed
+    file_list = ["10nM-FGC1-2min_aniso.txt", "10nM-FGC2-2min_aniso.txt"]
+    # run blitzcurve function to fit curves to individual samples
+    blitzcurve.run_fit(data_dir, figs_to_plot=file_list)
+    # setup a dictionary to shorten long sample names
+    name_dict = {"10nM-FGC1-2min_aniso.txt": "FGC1", "10nM-FGC2-2min_aniso.txt": "FGC2", "10nM-FGC3-2min_aniso.txt": "FGC3"}
+    # run blitzcurve function to compare curves and parameters for multiple samples
+    blitzcurve.run_compare(data_dir, name_dict=name_dict)
+
 Contribute
 ~~~~~~~~~~
 
@@ -87,36 +103,36 @@ Examples
 
 **fit to obtain r_max**
 
-.. image:: https://raw.githubusercontent.com/teese/blitzcurve/master/images/aniso_savgol_fit.png
-   :height: 300 px
-   :width: 300 px
+.. image:: https://raw.githubusercontent.com/teese/blitzcurve/master/blitzcurve/images/aniso_savgol_fit.png
+   :height: 500 px
+   :width: 500 px
 
 **fit to obtain r_inf**
 
-.. image:: https://raw.githubusercontent.com/teese/blitzcurve/master/images/aniso_seg2_fit.png
-   :height: 300 px
-   :width: 300 px
+.. image:: https://raw.githubusercontent.com/teese/blitzcurve/master/blitzcurve/images/aniso_seg2_fit.png
+   :height: 500 px
+   :width: 500 px
 
 **barchart comparing r_max**
 
-.. image:: https://raw.githubusercontent.com/teese/blitzcurve/master/images/01_barchart_r_max.png
-   :height: 300 px
-   :width: 300 px
+.. image:: https://raw.githubusercontent.com/teese/blitzcurve/master/blitzcurve/images/01_barchart_r_max.png
+   :height: 500 px
+   :width: 500 px
 
 **barchart comparing r_inf**
 
-.. image:: https://raw.githubusercontent.com/teese/blitzcurve/master/images/02_barchart_r_inf.png
-   :height: 300 px
-   :width: 300 px
+.. image:: https://raw.githubusercontent.com/teese/blitzcurve/master/blitzcurve/images/02_barchart_r_inf.png
+   :height: 500 px
+   :width: 500 px
 
 **linechart comparing fit to full data for three samples**
 
-.. image:: https://raw.githubusercontent.com/teese/blitzcurve/master/images/06_linechart_savgol.png
-   :height: 300 px
-   :width: 300 px
+.. image:: https://raw.githubusercontent.com/teese/blitzcurve/master/blitzcurve/images/06_linechart_savgol.png
+   :height: 500 px
+   :width: 500 px
 
 **linechart comparing fit to r_inf for three samples**
 
-.. image:: https://raw.githubusercontent.com/teese/blitzcurve/master/images/08_linechart_seg2.png
-   :height: 300 px
-   :width: 300 px
+.. image:: https://raw.githubusercontent.com/teese/blitzcurve/master/blitzcurve/images/08_linechart_seg2.png
+   :height: 500 px
+   :width: 500 px
