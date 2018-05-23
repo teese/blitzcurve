@@ -81,3 +81,42 @@ __ LangoschWebsite_
 .. image:: https://raw.githubusercontent.com/teese/eccpy/master/docs/images/signac_seine_bei_samois.png
    :height: 150px
    :width: 250px
+
+Examples
+~~~~~~~~
+
+**fit to obtain r_max**
+
+.. image:: https://raw.githubusercontent.com/teese/blitzcurve/master/images/aniso_savgol_fit.png
+   :height: 300 px
+   :width: 300 px
+
+**fit to obtain r_inf**
+
+.. image:: https://raw.githubusercontent.com/teese/blitzcurve/master/images/aniso_seg2_fit.png
+   :height: 300 px
+   :width: 300 px
+
+**barchart comparing r_max**
+
+.. image:: https://raw.githubusercontent.com/teese/blitzcurve/master/images/01_barchart_r_max.png
+   :height: 300 px
+   :width: 300 px
+
+**barchart comparing r_inf**
+
+.. image:: https://raw.githubusercontent.com/teese/blitzcurve/master/images/02_barchart_r_inf.png
+   :height: 300 px
+   :width: 300 px
+
+**linechart comparing fit to full data for three samples**
+
+.. image:: https://raw.githubusercontent.com/teese/blitzcurve/master/images/06_linechart_savgol.png
+   :height: 300 px
+   :width: 300 px
+
+**linechart comparing fit to r_inf for three samples**
+
+.. image:: https://raw.githubusercontent.com/teese/blitzcurve/master/images/08_linechart_seg2.png
+   :height: 300 px
+   :width: 300 px
