@@ -11,7 +11,7 @@ Why use TRAM techniques?
 
 To measure molecule rotation speeds (e.g. protein size, structure, ligand binding).
 
-To measure oligomerisation properties, via Förster Resonance Energy Transfer (FRET) between two fluorescent molecules.
+To measure oligomerisation properties, via Foerster Resonance Energy Transfer (FRET) between two fluorescent molecules.
 
 What is blitzcurve for?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -54,7 +54,8 @@ __ AnacondaLink_
 
 Usage
 ~~~~~
-.. highlight:: python
+
+.. code:: python
 
     import blitzcurve
     # define data directory with csv files
@@ -114,14 +115,14 @@ Examples
 **barchart comparing r_max**
 
 .. image:: https://raw.githubusercontent.com/teese/blitzcurve/master/blitzcurve/images/01_barchart_r_max.png
-   :height: 500 px
-   :width: 500 px
+   :height: 200 px
+   :width: 200 px
 
 **barchart comparing r_inf**
 
 .. image:: https://raw.githubusercontent.com/teese/blitzcurve/master/blitzcurve/images/02_barchart_r_inf.png
-   :height: 500 px
-   :width: 500 px
+   :height: 200 px
+   :width: 200 px
 
 **linechart comparing fit to full data for three samples**
 
