@@ -4,16 +4,14 @@ blitzcurve
 
 Data analysis of time-resolved fluorescence anisotropy measurements (TRAMs).
 
-Background
-~~~~~~~~~~
-
 TRAMs are state-of-the-art techniques that can be used to analyse protein function and interaction.
 
 Why use TRAM techniques?
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-To measure molecule rotation speeds (e.g. protein size, structure, ligand binding)
-To measure oligomerisation properties, via Förster Resonance Energy Transfer (FRET) between two fluorescent molecules
+To measure molecule rotation speeds (e.g. protein size, structure, ligand binding).
+
+To measure oligomerisation properties, via Förster Resonance Energy Transfer (FRET) between two fluorescent molecules.
 
 What is blitzcurve for?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
