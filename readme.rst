@@ -112,6 +112,12 @@ Examples
    :height: 500 px
    :width: 500 px
 
+**full two phase exponential fit**
+
+.. image:: https://raw.githubusercontent.com/teese/blitzcurve/master/blitzcurve/images/two_phase_exp_decay.png.png
+   :height: 500 px
+   :width: 500 px
+
 **barchart comparing r_max**
 
 .. image:: https://raw.githubusercontent.com/teese/blitzcurve/master/blitzcurve/images/01_barchart_r_max.png

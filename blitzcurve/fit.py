@@ -115,9 +115,7 @@ def fit_single_sample(csv, fc, p, figs_to_plot):
     """
     df = pd.read_csv(csv)
 
-    df2 = df[["time_ns", "anisotropy"]]
-    df2.to_csv(r"D:\xDelete\smFRET_fit_test\20171017_data\example.csv")
-
+    #df2 = df[["time_ns", "anisotropy"]]
 
     """Input dataframe looks like this:
          time_ns  anisotropy       fit      wres
@@ -309,6 +307,60 @@ def fit_single_sample(csv, fc, p, figs_to_plot):
         # save fitted data to output object
         fd.seg2_xfit = seg2_xfit
         fd.seg2_yfit = seg2_yfit
+
+
+    #########################################################################
+    #           2-phase exponential day fit to segnments 1 & 2              #
+    #########################################################################
+    if "all" or "2phasedecay" in figs_to_plot:
+        # plot raw datapoints
+        plt.close("all")
+        fig, ax = plt.subplots()
+        df.plot(kind="scatter", x="time_ns", y="anisotropy", ax=ax, color=fc.green, label="data", s=1, zorder=2)
+
+        # get x (time) and y (anisotropy) for only this segment
+        df_2ph = df.loc[start_seg1:, :]
+        df_2ph.to_csv(r"S:\m_data\blitzcurve_data\examples\summary\temp.csv")
+        x = df_2ph.time_ns.as_matrix()
+        y = df_2ph.anisotropy.as_matrix()
+
+        # fit to 2-phase decay formula. Extract constants from fitted exponential formula.
+        # guess = (plateau, SpanFast, Kfast, SpanSlow, Kslow)
+        guess = (0.1, 0.72, 0.65, 0.42, 0.15)
+        popt, pcov = curve_fit(utils.two_phase_exp_decay_func, x, y, p0=guess)
+        plateau, SpanFast, Kfast, SpanSlow, Kslow = popt
+        summ_dict["plateau"], summ_dict["SpanFast"] ,summ_dict["Kfast"], summ_dict["SpanSlow"], summ_dict["Kslow"] = plateau, SpanFast, Kfast, SpanSlow, Kslow
+
+        # annotate the function on the graph
+        #plateau + SpanFast * np.exp(-Kfast * x) + SpanSlow * np.exp(-Kslow * x)
+        function_string = r"y = %0.2f + %0.2f * $e^{(-%0.2fx)} + %0.2f * e^{(-%0.2fx)}$" % (plateau, SpanFast, Kfast, SpanSlow, Kslow)
+        ax.annotate(function_string, (x[0] + 0.2, y[0] + 0.05), color=fc.blue, fontsize=10)
+
+        # plot the fit to this section
+        xmax_fit = x.max() + 3
+        tped_xfit = np.linspace(0, xmax_fit, 500)
+        tped_yfit = utils.two_phase_exp_decay_func(tped_xfit, *popt)
+        ax.plot(tped_xfit, tped_yfit, color=fc.blue, label="fit")
+
+        # plot the r_inf as a horizontal line
+        ax.hlines(plateau, 0, xmax_fit, color=fc.blue)
+
+        # add the shading rectangle behind the fitted segment
+        # zorder is used to send the rectangle to the back
+        ymin, ymax = ax.get_ylim()
+        height = ymax - ymin
+        width = x[-1] - x[0]
+        rect = Rectangle((x[0], ymin), width, height, color="0.2", zorder=1)
+        ax.add_patch(rect)
+
+        ax.set_title("two phase exponential decay fit")
+        ax.legend()
+        fig.savefig(p.two_comp_exp_decay_png)
+
+        # save fitted data to output object
+        fd.tped_xfit = tped_xfit
+        fd.tped_yfit = tped_yfit
+
 
     return summ_dict, fd
 

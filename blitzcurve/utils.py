@@ -7,6 +7,35 @@ def exp_func(x, a, b, c):
     y = (a - c) * np.exp(-b * x) + c
     return y
 
+def two_phase_exp_decay_func(x, plateau, SpanFast, Kfast, SpanSlow, Kslow):
+    """Function for two phase exponential decay.
+
+    # variable names inspired by GraphPad
+    https://www.graphpad.com/guides/prism/7/curve-fitting/reg_exponential_decay_2phase.htm?toc=0&printWindow
+
+    Parameters
+    ----------
+    x : float
+        x value
+    plateau : float
+        yvalue where curve is flat (i.e. y at infinity)
+    SpanFast : float
+        Parameter for fast component
+    Kfast : float
+        K parameter for fast component
+    SpanSlow : float
+        Parameter for slow component
+    Kslow : float
+        K parameter for fast component
+
+    Returns
+    -------
+    y : float
+        y value
+    """
+    y = plateau + SpanFast * np.exp(-Kfast * x) + SpanSlow * np.exp(-Kslow * x)
+    return y
+
 class FlourescentColours():
     """
     Object with fluorescent html colours from https://www.w3schools.com/colors/colors_crayola.asp
@@ -91,10 +120,11 @@ class OutDirPaths:
         self.savgol_dir = os.path.join(self.fits_dir, "savgol")
         self.seg1_dir = os.path.join(self.fits_dir, "seg1")
         self.seg2_dir = os.path.join(self.fits_dir, "seg2")
+        self.two_comp_exp_decay_dir = os.path.join(self.fits_dir, "two_phase_exp_decay")
         self.fitdata_dir = os.path.join(self.fits_dir, "fitdata")
         self.summary_figs_dir = os.path.join(data_dir, "summary", "figs")
 
-        for path in [self.fits_dir, self.rotat_dir, self.savgol_dir, self.seg1_dir, self.seg2_dir, self.fitdata_dir, self.summary_figs_dir]:
+        for path in [self.fits_dir, self.rotat_dir, self.savgol_dir, self.seg1_dir, self.seg2_dir, self.two_comp_exp_decay_dir, self.fitdata_dir, self.summary_figs_dir]:
             if not os.path.isdir(path):
                 os.makedirs(path)
 
@@ -113,6 +143,7 @@ class FitFilePaths(OutDirPaths):
         self.savgol_fit_desc_png = os.path.join(self.seg1_dir, self.filename[:-4] + "_savgol_fit_desc.png")
         self.exp_fit_seg1_png = os.path.join(self.seg1_dir, self.filename[:-4] + "_seg1.png")
         self.exp_fit_seg2_png = os.path.join(self.seg2_dir, self.filename[:-4] + "_seg2.png")
+        self.two_comp_exp_decay_png = os.path.join(self.two_comp_exp_decay_dir, self.filename[:-4] + "_two_comp_exp_decay.png")
         self.fitdata_pickle = os.path.join(self.fitdata_dir, self.filename[:-4] + "_fitdata.pickle")
 
 class CompareFilePaths(OutDirPaths):
