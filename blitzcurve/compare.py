@@ -226,19 +226,19 @@ def run_compare(data_dir, file_list="all", name_dict= None):
             ax_seg2.plot(fd.seg2_xfit, fd.seg2_yfit, label=label)
 
     ax_sg.set_xlabel("time (ns)")
-    ax_sg.set_ylabel("anisotropy (r)")
+    ax_sg.set_ylabel("anisotropy, r")
     ax_sg.legend()
     fig_sg.tight_layout()
     fig_sg.savefig(cfp.linechart_savgol)
 
     ax_seg1.set_xlabel("time (ns)")
-    ax_seg1.set_ylabel("anisotropy (r)")
+    ax_seg1.set_ylabel("anisotropy, r")
     ax_seg1.legend()
     fig_seg1.tight_layout()
     fig_seg1.savefig(cfp.linechart_seg1)
 
     ax_seg2.set_xlabel("time (ns)")
-    ax_seg2.set_ylabel("anisotropy (r)")
+    ax_seg2.set_ylabel("anisotropy, r")
     ax_seg2.legend()
     fig_seg2.tight_layout()
     fig_seg2.savefig(cfp.linechart_seg2)
