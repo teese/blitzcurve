@@ -7,6 +7,10 @@ def exp_func(x, a, b, c):
     y = (a - c) * np.exp(-b * x) + c
     return y
 
+def time_resolved_anisotropy_decay_func(t, r0, r_inf, transfer_rate):
+    r_t = (r0-r_inf) * np.exp(-2 * transfer_rate * t) + r_inf
+    return r_t
+
 def two_phase_exp_decay_func(x, plateau, SpanFast, Kfast, SpanSlow, Kslow):
     """Function for two phase exponential decay.
 
@@ -121,10 +125,11 @@ class OutDirPaths:
         self.seg1_dir = os.path.join(self.fits_dir, "seg1")
         self.seg2_dir = os.path.join(self.fits_dir, "seg2")
         self.two_comp_exp_decay_dir = os.path.join(self.fits_dir, "two_phase_exp_decay")
+        self.time_resolved_anisotropy_decay_dir = os.path.join(self.fits_dir, "time_resolved_anisotropy_decay")
         self.fitdata_dir = os.path.join(self.fits_dir, "fitdata")
         self.summary_figs_dir = os.path.join(data_dir, "summary", "figs")
 
-        for path in [self.fits_dir, self.rotat_dir, self.savgol_dir, self.seg1_dir, self.seg2_dir, self.two_comp_exp_decay_dir, self.fitdata_dir, self.summary_figs_dir]:
+        for path in [self.fits_dir, self.rotat_dir, self.savgol_dir, self.seg1_dir, self.seg2_dir, self.two_comp_exp_decay_dir, self.time_resolved_anisotropy_decay_dir, self.fitdata_dir, self.summary_figs_dir]:
             if not os.path.isdir(path):
                 os.makedirs(path)
 
@@ -144,6 +149,7 @@ class FitFilePaths(OutDirPaths):
         self.exp_fit_seg1_png = os.path.join(self.seg1_dir, self.filename[:-4] + "_seg1.png")
         self.exp_fit_seg2_png = os.path.join(self.seg2_dir, self.filename[:-4] + "_seg2.png")
         self.two_comp_exp_decay_png = os.path.join(self.two_comp_exp_decay_dir, self.filename[:-4] + "_two_comp_exp_decay.png")
+        self.time_resolved_anisotropy_decay_png = os.path.join(self.time_resolved_anisotropy_decay_dir, self.filename[:-4] + "_time_resolved_anisotropy_decay.png")
         self.fitdata_pickle = os.path.join(self.fitdata_dir, self.filename[:-4] + "_fitdata.pickle")
 
 class CompareFilePaths(OutDirPaths):
