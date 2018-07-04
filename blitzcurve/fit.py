@@ -320,7 +320,6 @@ def fit_single_sample(csv, fc, p, figs_to_plot):
 
         # get x (time) and y (anisotropy) for only this segment
         df_2ph = df.loc[start_seg1:, :]
-        df_2ph.to_csv(r"S:\m_data\blitzcurve_data\examples\summary\temp.csv")
         x = df_2ph.time_ns.as_matrix()
         y = df_2ph.anisotropy.as_matrix()
 
