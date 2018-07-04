@@ -98,11 +98,23 @@ def run_compare(data_dir, file_list="all", name_dict= None):
         #########################################################################
         #               Barchart variable a, segments 1 and 2                   #
         #########################################################################
+
+        #generate only dataframe with a_seg1 and a_seg2
+        df_a_bars = pd.concat([df["a_seg1"], df["a_seg2"]], axis=1)
+        df_a_bars.columns = ["a_seg1", "a_seg2"]
+
         fig, ax = plt.subplots()
-        width = 0.4
-        df["a_seg1"].plot(kind="bar", ax=ax, color=fc.blue, width=width, position=1, label="segment 1")
+        width = 0.8
+        df_a_bars.plot(kind="bar", ax=ax, color=[fc.blue,fc.lemon], width=width, legend=False)
+        #gets handles for the legend (also gets and labels - rudimentary)
+        handles, labels = ax.get_legend_handles_labels()
+        #brings segment b to secondary y axis
         ax2 = ax.twinx()
-        df["a_seg2"].plot(kind="bar", ax=ax2, color=fc.lemon, width=width, position=0, label="segment 2")
+        for r in ax.patches[len(df_a_bars):]:
+            r.set_transform(ax2.transData)
+        #defines labels
+        labels = ["segment 1", "segment 2"]
+
         ax.set_ylabel("variable a in segment 1", color=fc.blue)
         ax.tick_params("y", colors=fc.blue)
         ax2.set_ylabel("variable a in segment 2", color=fc.lemon)
@@ -111,7 +123,8 @@ def run_compare(data_dir, file_list="all", name_dict= None):
         ax.set_xlim(-0.6, df.shape[0] - 0.4)
         ax.set_ylim(df["a_seg1"].min() - 0.005, df["a_seg1"].max() + 0.01)
         ax2.set_ylim(df["a_seg2"].min() - 0.005, df["a_seg2"].max() + 0.01)
-        fig.legend(ncol=2, loc="upper center", bbox_to_anchor=(0, 0.85, 1.1, .102))
+        fig.legend(handles,labels,ncol=2, loc="upper center", bbox_to_anchor=(0, 0.85, 1.1, .102))
+
         fig.tight_layout()
         fig.savefig(cfp.barchart_variable_a_png)
         sys.stdout.write("\n{}".format(cfp.barchart_variable_a_png))
@@ -120,11 +133,23 @@ def run_compare(data_dir, file_list="all", name_dict= None):
         #########################################################################
         #               Barchart variable b, segments 1 and 2                   #
         #########################################################################
+
+        #generate only dataframe with b_seg1 and b_seg2
+        df_b_bars = pd.concat([df["b_seg1"], df["b_seg2"]], axis=1)
+        df_b_bars.columns = ["b_seg1", "b_seg2"]
+
         fig, ax = plt.subplots()
-        width = 0.4
-        df["b_seg1"].plot(kind="bar", ax=ax, color=fc.blue, width=width, position=1, label="segment 1")
+        width = 0.8
+        df_b_bars.plot(kind="bar", ax=ax, color=[fc.blue, fc.lemon], width=width, legend=False)
+        # gets handles for the legend (also gets and labels - rudimentary)
+        handles, labels = ax.get_legend_handles_labels()
+        # brings segment b to secondary y axis
         ax2 = ax.twinx()
-        df["b_seg2"].plot(kind="bar", ax=ax2, color=fc.lemon, width=width, position=0, label="segment 2")
+        for r in ax.patches[len(df_b_bars):]:
+            r.set_transform(ax2.transData)
+        # defines labels
+        labels = ["segment 1", "segment 2"]
+
         ax.set_ylabel("variable b in segment 1", color=fc.blue)
         ax.tick_params("y", colors=fc.blue)
         ax2.set_ylabel("variable b in segment 2", color=fc.lemon)
@@ -133,7 +158,8 @@ def run_compare(data_dir, file_list="all", name_dict= None):
         ax.set_xlim(-0.6, df.shape[0] - 0.4)
         ax.set_ylim(df["b_seg1"].min() - 0.005, df["b_seg1"].max() + 0.02)
         ax2.set_ylim(df["b_seg2"].min() - 0.005, df["b_seg2"].max() + 0.02)
-        fig.legend(ncol=2, loc="upper center", bbox_to_anchor=(0, 0.85, 1.1, .102))
+        fig.legend(handles,labels,ncol=2, loc="upper center", bbox_to_anchor=(0, 0.85, 1.1, .102))
+
         fig.tight_layout()
         fig.savefig(cfp.barchart_variable_b_png)
         sys.stdout.write("\n{}".format(cfp.barchart_variable_b_png))
@@ -142,11 +168,23 @@ def run_compare(data_dir, file_list="all", name_dict= None):
         #               Barchart variable c, segments 1 and 2 (r_inf)           #
         #########################################################################
         plt.close("all")
+
+        # generate only dataframe with c_seg1 and r_inf
+        df_c_rinf_bars = pd.concat([df["c_seg1"], df["r_inf"]], axis=1)
+        df_c_rinf_bars.columns = ["c_seg1", "r_inf"]
+
         fig, ax = plt.subplots()
-        width = 0.4
-        df["c_seg1"].plot(kind="bar", ax=ax, color=fc.blue, width=width, position=1, label="segment 1")
+        width = 0.8
+        df_c_rinf_bars.plot(kind="bar", ax=ax, color=[fc.blue, fc.lemon], width=width, legend=False)
+        # gets handles for the legend (also gets and labels - rudimentary)
+        handles, labels = ax.get_legend_handles_labels()
+        # brings segment b to secondary y axis
         ax2 = ax.twinx()
-        df["r_inf"].plot(kind="bar", ax=ax2, color=fc.lemon, width=width, position=0, label="segment 2")
+        for r in ax.patches[len(df_c_rinf_bars):]:
+            r.set_transform(ax2.transData)
+        # defines labels
+        labels = ["segment 1", "segment 2"]
+
         ax.set_ylabel("variable c in segment 1", color=fc.blue)
         ax.tick_params("y", colors=fc.blue)
         ax2.set_ylabel("variable c (r_inf) in segment 2", color=fc.lemon)
@@ -155,7 +193,8 @@ def run_compare(data_dir, file_list="all", name_dict= None):
         ax.set_xlim(-0.6, df.shape[0] - 0.4)
         ax.set_ylim(df["c_seg1"].min() - 0.005, df["c_seg1"].max() + 0.01)
         ax2.set_ylim(df["r_inf"].min() - 0.005, df["r_inf"].max() + 0.01)
-        fig.legend(ncol=2, loc="upper center", bbox_to_anchor=(0, 0.85, 1.1, .102))
+
+        fig.legend(handles,labels,ncol=2, loc="upper center", bbox_to_anchor=(0, 0.85, 1.1, .102))
         fig.tight_layout()
         fig.savefig(cfp.barchart_variable_c_png)
         sys.stdout.write("\n{}".format(cfp.barchart_variable_c_png))
