@@ -10,6 +10,7 @@ from scipy.signal import savgol_filter
 import blitzcurve.utils as utils
 from blitzcurve.utils import setup_matplotlib_dark_background, FitFilePaths
 
+### test ###
 
 def run_fit(data_dir, figs_to_plot="all", testing_mode=False):
     """Runs fit_single_sample on all files in a designated directory.
